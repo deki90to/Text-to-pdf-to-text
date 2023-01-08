@@ -8,10 +8,10 @@ def convert_file(file):
 
     for text in file:
         if len(text) <= 20:
-            pdf.set_font("Arial","B",size=18) # For title text
+            pdf.set_font("Arial","B",size=18)
             pdf.cell(w=200,h=10,txt=text,ln=1,align="C")
         else:
-            pdf.set_font("Arial",size=15) # For paragraph text
+            pdf.set_font("Arial",size=15)
             pdf.multi_cell(w=0,h=10,txt=text,align="L")
 
     pdf.output(f"{file.name.split('.')[0]}.pdf")

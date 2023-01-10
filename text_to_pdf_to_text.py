@@ -2,6 +2,24 @@ from tkinter import *
 from fpdf import FPDF
 import PyPDF2
 
+<<<<<<< HEAD
+=======
+def convert_file(file):
+    pdf = FPDF()
+    pdf.add_page()
+
+    for text in file:
+        if len(text) <= 20:
+            pdf.set_font("Arial","B",size=18)
+            pdf.cell(w=200,h=10,txt=text,ln=1,align="C")
+        else:
+            pdf.set_font("Arial",size=15)
+            pdf.multi_cell(w=0,h=10,txt=text,align="L")
+
+    pdf.output(f"{file.name.split('.')[0]}.pdf")
+    print("Successfully converted!")
+
+>>>>>>> 5f30d6952b8ecb19714c9f8a3a753a0c88dd645e
 root = Tk()
 root.geometry('310x120')
 root['bg']='#004038'

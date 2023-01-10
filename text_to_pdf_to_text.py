@@ -2,27 +2,16 @@ from tkinter import *
 from fpdf import FPDF
 import PyPDF2
 
-def convert_file(file):
-    pdf = FPDF()
-    pdf.add_page()
-
-    for text in file:
-        if len(text) <= 20:
-            pdf.set_font("Arial","B",size=18)
-            pdf.cell(w=200,h=10,txt=text,ln=1,align="C")
-        else:
-            pdf.set_font("Arial",size=15)
-            pdf.multi_cell(w=0,h=10,txt=text,align="L")
-
-    pdf.output(f"{file.name.split('.')[0]}.pdf")
-    print("Successfully converted!")
-
 
 root = Tk()
 root.geometry('310x120')
 root['bg']='#004038'
 root.title('PDF Converter')
 root.resizable(False, False)
+
+
+def clear_text():
+   text_file_input.delete(0, END)
 
 
 input_text = StringVar()
@@ -53,8 +42,10 @@ def convert_text_file():
                 pdf.output(f"{file.name.split('.')[0]}.pdf")
 
                 print("Successfully converted to pdf")
+                clear_text()
 
-        result_label.config(text="Successfully converted")
+        result_label.config(text="Successfully converted to .pdf")
+
     except FileNotFoundError:
         result_label.config(text="File not found. Please enter a valid file name.")
     except:
@@ -78,8 +69,10 @@ def convert_pdf_file():
                     outfile.write(text)
 
             print("Successfully converted to txt")
-            
-        result_label.config(text="Successfully converted")
+            clear_text()
+
+        result_label.config(text="Successfully converted to .txt")
+
     except FileNotFoundError:
         result_label.config(text="File not found. Please enter a valid file name.")
     except:

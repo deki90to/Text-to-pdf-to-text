@@ -1,10 +1,12 @@
 from tkinter import *
 from fpdf import FPDF
 import PyPDF2
-
+import img2pdf
+from PIL import Image
+import os
 
 root = Tk()
-root.geometry('310x120')
+root.geometry('310x150')
 root['bg']='#004038'
 root.title('PDF Converter')
 root.resizable(False, False)
@@ -16,7 +18,7 @@ def clear_text():
 
 input_text = StringVar()
 
-text_label = Label(root, text='.txt to .pdf, .pdf to .txt', bg='#004038', fg='white')
+text_label = Label(root, text='Enter file name without extension', bg='#004038', fg='white')
 text_label.pack()
 
 text_file_input = Entry(root, width = 100, textvar = input_text)
@@ -51,7 +53,7 @@ def convert_text_file():
     except:
         result_label.config(text="An error occurred. Please check the file and try again.")
 
-Button(root, width=80, bg='red', fg='white', relief='sunken', text='Convert .txt > .pdf', command=convert_text_file).pack()
+Button(root, width=80, bg='red', fg='white', relief='sunken', text='.txt > .pdf', command=convert_text_file).pack()
 
 
 def convert_pdf_file():
@@ -78,11 +80,39 @@ def convert_pdf_file():
     except:
         result_label.config(text="An error occurred. Please check the file and try again.")
 
-Button(root, width=80, bg='red', fg='white', relief='sunken', text='Convert .pdf > .txt', command=convert_pdf_file).pack()
+Button(root, width=80, bg='red', fg='white', relief='sunken', text='.pdf > .txt', command=convert_pdf_file).pack()
+
+
+def convert_image_to_pdf():
+    pict_text = input_text.get()
+
+    extensions = ['.jpg', '.jpeg', '.png']
+    
+    for extension in extensions:
+        try:
+            img_input = pict_text + extension
+            pdf_output = pict_text + '.pdf'
+
+            image = Image.open(img_input)
+            pdf_bytes = img2pdf.convert(image.filename)
+
+            file = open(pdf_output, "wb")
+            file.write(pdf_bytes)
+            image.close()
+            file.close()
+
+            print("Image successfully converted to pdf file")
+            result_label.config(text="Successfully converted to .pdf")
+            clear_text()
+            break
+
+        except FileNotFoundError:
+            result_label.config(text="File not found. Please enter a valid file name.")
+        
+Button(root, width=80, bg='red', fg='white', relief='sunken', text='img > .pdf', command=convert_image_to_pdf).pack()
 
 
 result_label = Label(root, text="", bg='#004038', fg='white')
 result_label.pack()
-
 
 root.mainloop()

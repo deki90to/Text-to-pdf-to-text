@@ -1,3 +1,1 @@
-Converting:
-	.txt to .pdf and vice versa, 
-	image > .pdf 
+Converting .txt to .pdf and vice versa and image > .pdf 
